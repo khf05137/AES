@@ -9,18 +9,18 @@ using System.Text;
 namespace AES.UnitTest.IO
 {
     [TestClass]
-    public class TestAESFile
+    public class TestAESFile_key
     {
         [TestMethod]
         public void TestBytes()
         {
             var temp = Path.GetTempFileName();
-            string password = "p@ssw0rd";
+            byte[] key = Encoding.UTF8.GetBytes("ABCDEFGHIJKLMNOP");
             var data = Enumerable.Range(0, 1024 + 1).Select(val => (byte)val).ToArray();
 
-            AESFile.WriteAllBytes(temp, data, password);
+            AES128File.WriteAllBytes(temp, data, key);
 
-            var readedData = AESFile.ReadAllBytes(temp, password);
+            var readedData = AES128File.ReadAllBytes(temp, key);
 
             Assert.IsTrue(data.SequenceEqual(readedData));
         }
@@ -41,12 +41,12 @@ namespace AES.UnitTest.IO
         public void TestLines()
         {
             var temp = Path.GetTempFileName();
-            string password = "p@ssw0rd";
+            byte[] key = Encoding.UTF8.GetBytes("ABCDEFGHIJKLMNOP");
             var expect = GetStringList();
 
-            AESFile.WriteLines(temp, expect, password);
+            AES128File.WriteLines(temp, expect, key);
 
-            var list = AESFile.ReadLines(temp, password);
+            var list = AES128File.ReadLines(temp, key);
             Assert.IsTrue(expect.SequenceEqual(list));
         }
 
@@ -54,12 +54,12 @@ namespace AES.UnitTest.IO
         public void TestLinesEncoding()
         {
             var temp = Path.GetTempFileName();
-            string password = "p@ssw0rd";
+            byte[] key = Encoding.UTF8.GetBytes("ABCDEFGHIJKLMNOP");
             var expect = GetStringList();
 
-            AESFile.WriteLines(temp, expect, Encoding.Unicode, password);
+            AES128File.WriteLines(temp, expect, Encoding.Unicode, key);
 
-            var list = AESFile.ReadLines(temp, Encoding.Unicode, password);
+            var list = AES128File.ReadLines(temp, Encoding.Unicode, key);
 
             Assert.IsTrue(expect.SequenceEqual(list));
         }
@@ -68,12 +68,12 @@ namespace AES.UnitTest.IO
         public void TestAllLines()
         {
             var temp = Path.GetTempFileName();
-            string password = "p@ssw0rd";
+            byte[] key = Encoding.UTF8.GetBytes("ABCDEFGHIJKLMNOP");
             var expect = GetStringList().ToArray();
 
-            AESFile.WriteAllLines(temp, expect, password);
+            AES128File.WriteAllLines(temp, expect, key);
 
-            var list = AESFile.ReadAllLines(temp, password);
+            var list = AES128File.ReadAllLines(temp, key);
             Assert.IsTrue(expect.SequenceEqual(list));
         }
 
@@ -81,11 +81,11 @@ namespace AES.UnitTest.IO
         public void TestAllLinesEncoding()
         {
             var temp = Path.GetTempFileName();
-            string password = "p@ssw0rd";
+            byte[] key = Encoding.UTF8.GetBytes("ABCDEFGHIJKLMNOP");
             var expect = GetStringList().ToArray();
 
-            AESFile.WriteAllLines(temp, expect, Encoding.Unicode, password);
-            var list = AESFile.ReadAllLines(temp, Encoding.Unicode, password);
+            AES128File.WriteAllLines(temp, expect, Encoding.Unicode, key);
+            var list = AES128File.ReadAllLines(temp, Encoding.Unicode, key);
             Assert.IsTrue(expect.SequenceEqual(list));
         }
 
@@ -93,11 +93,11 @@ namespace AES.UnitTest.IO
         public void TestAllText()
         {
             var temp = Path.GetTempFileName();
-            string password = "p@ssw0rd";
+            byte[] key = Encoding.UTF8.GetBytes("ABCDEFGHIJKLMNOP");
             var expect = "The quick brown fox jumps over the lazy dog. 1234567890";
 
-            AESFile.WriteAllText(temp, expect, password);
-            var text = AESFile.ReadAllText(temp, password);
+            AES128File.WriteAllText(temp, expect, key);
+            var text = AES128File.ReadAllText(temp, key);
 
             Assert.AreEqual(expect, text);
         }

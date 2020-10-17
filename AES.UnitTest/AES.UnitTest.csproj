@@ -49,9 +49,10 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IO\TestAESFile.cs" />
+    <Compile Include="IO\TestAESFile_key.cs" />
+    <Compile Include="IO\TestAESFile_password.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Security\Cryptography\TestAESStream.cs" />
+    <Compile Include="Security\Cryptography\TestAES128.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
