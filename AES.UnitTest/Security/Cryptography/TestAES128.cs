@@ -69,5 +69,20 @@ namespace AES.UnitTest.Security.Cryptography
             Assert.IsTrue(testData.SequenceEqual(decrypted));
 
         }
+
+        [TestMethod]
+        public void TestBytes()
+        {
+            byte[] key = Enumerable.Range(100, 16).Select(val => (byte)val).ToArray();
+            byte[] IV = Enumerable.Range(128, 16).Select(val => (byte)val).ToArray();
+
+            byte[] testData = Enumerable.Range(0, 256).Select(val => (byte)val).ToArray();
+
+            var encData = AES128.Encrypt(testData, key, IV);
+
+            var decodeData = AES128.Decrypt(encData, key, IV);
+
+            Assert.IsTrue(testData.SequenceEqual(decodeData));
+        }
     }
 }

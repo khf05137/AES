@@ -6,6 +6,23 @@ namespace khf05137.Security.Cryptography
 {
     public static class AES128
     {
+        public static byte[] Encrypt(byte[] input, byte[] Key, byte[] IV)
+        {
+            using (var am = new AesManaged())
+            {
+                am.BlockSize = 128;
+                am.KeySize = 128;
+                am.Mode = CipherMode.CBC;
+                am.Padding = PaddingMode.PKCS7;
+
+                am.Key = Key;
+                am.IV = IV;
+
+                var crypter = am.CreateEncryptor();
+                return crypter.TransformFinalBlock(input, 0, input.Length);
+            }
+        }
+
         public static Stream EncryptStream(Stream outStream, byte[] key)
         {
             if (key.Length != 16) throw new ArgumentException();
@@ -45,6 +62,22 @@ namespace khf05137.Security.Cryptography
 
                 var crypter = am.CreateEncryptor(am.Key, am.IV);
                 return new CryptoStream(outStream, crypter, CryptoStreamMode.Write);
+            }
+        }
+
+        public static byte[] Decrypt(byte[] input, byte[] Key, byte[] IV)
+        {
+            using (var am = new AesManaged())
+            {
+                am.BlockSize = 128;
+                am.KeySize = 128;
+                am.Mode = CipherMode.CBC;
+                am.Padding = PaddingMode.PKCS7;
+                am.Key = Key;
+                am.IV = IV;
+
+                var crypter = am.CreateDecryptor();
+                return crypter.TransformFinalBlock(input, 0, input.Length);
             }
         }
 
